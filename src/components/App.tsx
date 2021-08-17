@@ -21,17 +21,48 @@ const App = () => {
 
   const { toggleColorMode } = useColorMode()
 
+  const sortedKeyData = keyData.sort((a, b) => a.note - b.note)
+  console.log('what is {efk', { keyData, sortedKeyData })
+
   return (
     <div className="App">
       <Flex width="100%">
         <Flex flexDir="column" width="400px" height="100vh" p={4}>
           <Heading>Notes:</Heading>
           <Box>
-            {keyData.map((key, i) => {
+            {sortedKeyData.map((key, i) => {
+              let note = key.note && keyMap[key.note].note.replace('s', '#')
+
+              if (!note) return null
+
+              const noteName = note.substr(0, note.length - 1)
+              const octave = note[note.length - 1]
+
               return (
-                <Text key={i} fontSize="24px" fontWeight={600}>
-                  {key.note && keyMap[key.note].note}{' '}
-                </Text>
+                <Flex key={i}>
+                  <Flex alignItems="flex-end" minW="48px">
+                    <Text fontSize="24px" fontWeight={600}>
+                      {noteName.toUpperCase()}
+                    </Text>
+                    <Text fontSize="16px">{octave}</Text>
+                  </Flex>
+                  <Text
+                    ml="32px"
+                    fontSize="24px"
+                    color="blue.600"
+                    fontWeight="bold"
+                  >
+                    {key.note}
+                  </Text>
+                  <Text
+                    ml="32px"
+                    fontSize="24px"
+                    color="blue.600"
+                    fontWeight="bold"
+                  >
+                    {(key.note % 12) + 1}
+                  </Text>
+                </Flex>
               )
             })}
           </Box>
