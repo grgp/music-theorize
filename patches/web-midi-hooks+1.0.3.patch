@@ -1,0 +1,152 @@
+diff --git a/node_modules/web-midi-hooks/dist/index.js b/node_modules/web-midi-hooks/dist/index.js
+new file mode 100644
+index 0000000..a7ac230
+--- /dev/null
++++ b/node_modules/web-midi-hooks/dist/index.js
+@@ -0,0 +1,146 @@
++(function (global, factory) {
++  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
++  typeof define === 'function' && define.amd ? define(['react'], factory) :
++  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.index = factory(global.React));
++}(this, (function (React) { 'use strict';
++
++  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
++
++  var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
++
++  const MidiDataContext = /*#__PURE__*/React__default['default'].createContext({
++    deviceName: null,
++    keyData: [],
++    pitch: 64,
++    modulation: 0,
++    errors: null
++  });
++
++  // MIDI object constants
++  const EVENT_INDEX = 0;
++  const LEAST_SIGNIFICANT_BYTE_INDEX = 1;
++  const MOST_SIGNIFICANT_BYTE_INDEX = 2;
++  const NOTE_ON_EVENT = 144;
++  const NOTE_OFF_EVENT = 128;
++  const PITCH_BEND_EVENT = 224;
++  const MODULATION_EVENT = 176; // MIDI states
++
++  const DISCONNECTED = "disconnected";
++  const CONNECTED = "connected"; // MIDI Errors
++
++  const NO_DEVICE_ERROR = "Error: No device found.";
++  const NO_DEVICE_ON_STARTUP_ERROR = "Error: No device found. Please connect a device and refresh your browser.";
++  const CONNECTION_ERROR = "Error: Could not establish access to Web MIDI Api.";
++  const UNSUPPORTED_BROWSER_ERROR = "Web MIDI Api is not supported in this browser.";
++
++  async function setUpMIDIAccess() {
++    if (navigator.requestMIDIAccess) {
++      try {
++        const midiAccess = await navigator.requestMIDIAccess();
++        const midiInput = getMidiInput(midiAccess);
++        return midiInput;
++      } catch (error) {
++        console.error(CONNECTION_ERROR);
++      }
++    } else {
++      alert(UNSUPPORTED_BROWSER_ERROR);
++    }
++  }
++
++  const getMidiInput = midiAccess => {
++    // Avoids issue of device renaming on different computers, but restricts us to 1 device connected at a time
++    const iter = midiAccess.inputs.keys();
++    const activeInputId = iter.next().value;
++    const activeInput = midiAccess.inputs.get(activeInputId);
++    const midiInput = activeInput ? activeInput : {
++      errors: NO_DEVICE_ON_STARTUP_ERROR
++    };
++    return midiInput;
++  };
++
++  const MidiProvider = props => {
++    const [keyData, setKeyData] = React.useState([{
++      note: null,
++      velocity: null
++    }]);
++    const [errors, setErrors] = React.useState(null);
++    const [pitch, setPitch] = React.useState(64);
++    const [modulation, setModulation] = React.useState(0);
++    const [deviceName, setDeviceName] = React.useState(null);
++    const midiData = {
++      deviceName,
++      keyData,
++      pitch,
++      modulation,
++      errors
++    };
++
++    const onMIDIMessage = midiMessage => {
++      const event = midiMessage.data[EVENT_INDEX];
++      const newLSB = midiMessage.data[LEAST_SIGNIFICANT_BYTE_INDEX];
++      const newMSB = midiMessage.data[MOST_SIGNIFICANT_BYTE_INDEX];
++      const newKeyData = {
++        note: newLSB,
++        velocity: newMSB
++      };
++
++      switch (event) {
++        case NOTE_ON_EVENT:
++          setKeyData(keyData => [...keyData, newKeyData]);
++          break;
++
++        case NOTE_OFF_EVENT:
++          setKeyData(keyData => keyData.filter(keyObj => {
++            return keyObj.note !== newLSB;
++          }));
++          break;
++
++        case PITCH_BEND_EVENT:
++          setPitch(newMSB);
++          break;
++
++        case MODULATION_EVENT:
++          setModulation(newMSB);
++          break;
++
++        default:
++          return null;
++      }
++    };
++
++    const onStateChange = input => {
++      setKeyData([]);
++
++      if (input.currentTarget.state === DISCONNECTED) {
++        setDeviceName(null);
++        setErrors(NO_DEVICE_ERROR);
++      } else if (input.currentTarget.state === CONNECTED) {
++        setDeviceName(input.currentTarget.name);
++        setErrors(null);
++      }
++    };
++
++    React.useEffect(() => {
++      async function setUp() {
++        const midiInput = await setUpMIDIAccess();
++        midiInput.onmidimessage = onMIDIMessage;
++        midiInput.onstatechange = onStateChange;
++        setErrors(midiInput.errors);
++      }
++
++      setUp();
++    }, []);
++    return /*#__PURE__*/React__default['default'].createElement(MidiDataContext.Provider, {
++      value: midiData
++    }, props.children);
++  };
++
++  // This file serves as the entry point to bundle the web-midi-hooks package
++  var index = {
++    MidiProvider,
++    MidiDataContext
++  };
++
++  return index;
++
++})));

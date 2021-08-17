@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.keyboard-outer {
+  margin: 100px auto 0 auto;
+  position: relative;
+  width: 800px;
+  height: 280px;
+  border: 3px solid #A1B0C2;
+  border-radius: 12px;
+  background-color: #3323E8;
+  box-shadow: 60px 80px 70px -80px #222;
+  background-image: linear-gradient(
+    90deg,
+    #83909E,
+    #C1D3E8
+  );
+}
+
+.keyboard-inner {
+  background-color: #1D2124;
+  width: 775px;
+  height: 255px;
+  border-radius: 6px;
+  margin: 10px auto;
+  box-shadow: 
+    4px 8px 6px 4px #040505 inset,
+    -2px -2px 3px 4px #A1B0C2;
+  z-index: 100;
+}
+
+.controls {
+  position: absolute;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  background: #69A9D6;
+}
+
+.top {
+  width: 260px;
+  height: 55px;
+  top: 20px;
+  left: 180px;
+}
+
+.left {
+  width: 110px;
+  height: 158px;
+  top: 95px;
+  left: 30px;
+}
+
+.line {
+  width: 300px;
+  height: 100px;
+  left: 85px;
+  top: 47px;
+  background: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.dial {
+  position: absolute;
+  top: 105px;
+  width: 10px;
+  height: 137px;
+  background: black;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    90deg,
+    #000 0% 40%,
+    #666 40% 60%,
+    #000 60%
+  );
+}
+
+.pitch {
+  left: 58px;
+}
+
+.modulation {
+  left: 103px;
+}
+
+.handle-mod {
+  position: absolute;
+  right: -13px;
+  width: 35px;
+  height: 10px;
+  border-radius: 3px;
+  border: 2px solid black;
+  background: #F58A18;
+}
+
+.handle-pitch {
+  position: absolute;
+  right: -13px;
+  width: 35px;
+  height: 10px;
+  border-radius: 3px;
+  border: 2px solid black;
+  background: #F58A18;
+}
+
+.button {
+  position: absolute;
+  top: 30px;
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  border: 3px solid black;
+  background: #C1D3E8;
+  box-shadow: 3px 2px 1px 1px #040505;
+  background-image: linear-gradient(
+    90deg,
+    transparent 30%,
+    #C1D3E8 0% 48%,
+    #C1D3E8 52%
+  ), linear-gradient(
+    0deg,
+    #C1D3E8 0% 48%,
+    #000 48% 52%,
+    #C1D3E8 52%
+  );
+}
+
+.b1 {
+  left: 202px;
+}
+
+.b2 {
+  left: 262px;
+}
+
+.b3 {
+  left: 322px;
+}
+
+.b4 {
+  left: 382px;
+}
+
+.key-container {
+  position: absolute;
+  background: black;
+  padding: 0 1px;
+  width: 600px;
+  height: 170px;
+  border-top: 3px solid #040505;
+  right: 30px;
+  bottom: 12px;
+  box-shadow: 0px -8px 4px -2px #040505;
+}
+
+.white-key {
+  position: absolute;
+  width: 38px;
+  height: 165px;
+  background-color: white;
+  box-shadow: -1px -4px 4px 2px #d3d3d3 inset;
+}
+
+.white-pressed {
+  position: absolute;
+  width: 38px;
+  height: 168px;
+  box-shadow: -12px -12px 10px -2px #c0c0c0 inset;
+}
+
+.black-key {
+  position: absolute;
+  width: 20px;
+  height: 100px;
+  background-color: black;
+  background-image: linear-gradient(
+    #000 5% 80%,
+    #333 85%
+  );
+  border: 2px solid black;
+  border-right: 3px solid #444;
+  z-index: 100;
+}
+
+.black-pressed {
+  position: absolute;
+  width: 20px;
+  height: 103px;
+  box-shadow: -6px -2px 10px -6px #c0c0c0 inset;
+}

@@ -1,0 +1,24 @@
+.visualizer {
+  width: 800px;
+  margin: 50px auto;
+}
+
+.flex {
+  display: flex;
+  width: 600px;
+}
+
+h4 {
+  width: 100px;
+  margin: 0 10px 0 0;
+  text-align: right;
+}
+
+.errors {
+  width: 300px;
+  color: red;
+}
+
+.data {
+  width: 30px;
+}
