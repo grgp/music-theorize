@@ -24,18 +24,20 @@ const App = () => {
 
   console.log('what is {efk', { keyData, sortedKeyData })
 
-  const mappedKeyData = sortedKeyData.map((key, i) => {
-    let note = key.note && keyMap[key.note].note.replace('s', '#')
+  const mappedKeyData = sortedKeyData
+    .map((key, i) => {
+      let note = key.note && keyMap[key.note].note.replace('s', '#')
 
-    if (!note) return null
+      if (!note) return null
 
-    const noteName = note.substr(0, note.length - 1)
-    const octave = note[note.length - 1]
+      const noteName = note.substr(0, note.length - 1)
+      const octave = note[note.length - 1]
 
-    const relNote = (key.note % 12) + 1
+      const relNote = (key.note % 12) + 1
 
-    return { ...key, noteName, octave, relNote }
-  })
+      return { ...key, noteName, octave, relNote }
+    })
+    .filter(Boolean)
 
   const relations = [] as number[]
   for (let n = 0; n < mappedKeyData.length - 1; n++) {
@@ -46,7 +48,7 @@ const App = () => {
     if (key1 <= key2) {
       diff = key2 - key1
     } else {
-      diff = (key2 + 12) - key1
+      diff = key2 + 12 - key1
     }
 
     relations.push(diff)
@@ -61,14 +63,21 @@ const App = () => {
     '5 3': { kind: 'minor', inv: 2, root: 1 },
   }
 
+  const quality = relationsMap[relations.join(' ')]
+  const chord = quality
+    ? mappedKeyData[quality.root].noteName.toUpperCase() +
+      ` ${quality.kind} ${quality.inv ? `inv ${quality.inv}` : ''}`
+    : ''
+
   return (
     <div className="App">
       <Flex width="100%">
         <Flex flexDir="column" width="400px" height="100vh" p={4}>
-          <Heading>Notes:</Heading>
+          <Heading>Notes</Heading>
           <Heading fontSize="24px">Relations: {relations.join(' ')}</Heading>
+          <Heading fontSize="24px">Chord: {chord}</Heading>
           <Box>
-            {mappedKeyData.filter(Boolean).map((key, i) => {
+            {mappedKeyData.map((key, i) => {
               const { noteName, octave, relNote } = key
 
               return (
