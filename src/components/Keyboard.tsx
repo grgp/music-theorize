@@ -2,6 +2,7 @@ import React, { ReactElement, useContext } from 'react'
 import { MidiDataContext } from 'web-midi-hooks'
 import '../styles/keyboard.css'
 import { keyMap } from '../common/keyMap'
+import { Text } from '@chakra-ui/react'
 
 let regularKeys = [] as ReactElement[]
 
@@ -9,11 +10,30 @@ for (let key in keyMap) {
   const keyStyle = { left: keyMap[key].offset }
   if (keyMap[key].color === 'white') {
     regularKeys.push(
-      <div style={keyStyle} className="white-key" key={key}></div>
+      <div style={keyStyle} className="white-key" key={key}>
+        <Text
+          fontWeight="bold"
+          color="black"
+          pl={4 * (Number(key) % 3) + 'px'}
+          pt="120px"
+          fontSize="14px"
+        >
+          {key}
+        </Text>
+      </div>
     )
   } else {
     regularKeys.push(
-      <div style={keyStyle} className="black-key" key={key}></div>
+      <div style={keyStyle} className="black-key" key={key}>
+        <Text
+          fontWeight="bold"
+          color="white"
+          pt="20px"
+          fontSize="10px"
+        >
+          {key}
+        </Text>
+      </div>
     )
   }
 }

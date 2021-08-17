@@ -1,12 +1,12 @@
-import { ColorModeScript } from '@chakra-ui/react'
 import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { MidiProvider } from 'web-midi-hooks'
 
-import { ChakraProvider, theme } from '@chakra-ui/react'
+import { ColorModeScript, ChakraProvider } from '@chakra-ui/react'
 
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
+import theme from './styles/theme'
 import './styles/index.css'
 
 ReactDOM.render(
