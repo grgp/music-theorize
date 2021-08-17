@@ -61,6 +61,15 @@ const App = () => {
     '3 4': { kind: 'minor', inv: 0, root: 0 },
     '4 5': { kind: 'minor', inv: 1, root: 2 },
     '5 3': { kind: 'minor', inv: 2, root: 1 },
+    // need to check
+    '4 3 4': { kind: 'maj7', inv: 0, root: 0 },
+    '3 4 1': { kind: 'maj7', inv: 1, root: 3 },
+    '4 1 4': { kind: 'maj7', inv: 2, root: 2 },
+    '1 4 3': { kind: 'maj7', inv: 3, root: 1 },
+    '3 4 4': { kind: 'min7', inv: 0, root: 0 },
+    '4 3 2': { kind: 'min7', inv: 1, root: 3 },
+    '3 2 3': { kind: 'min7', inv: 2, root: 2 },
+    '2 3 4': { kind: 'min7', inv: 3, root: 1 },
   }
 
   const quality = relationsMap[relations.join(' ')]
@@ -72,11 +81,15 @@ const App = () => {
   return (
     <div className="App">
       <Flex width="100%">
-        <Flex flexDir="column" width="400px" height="100vh" p={4}>
-          <Heading>Notes</Heading>
+        <Flex flexDir="column" width="600px" height="100vh" p={4} pt={8}>
           <Heading fontSize="24px">Relations: {relations.join(' ')}</Heading>
-          <Heading fontSize="24px">Chord: {chord}</Heading>
-          <Box>
+          <Flex>
+            <Heading fontSize="32px">Chord:</Heading>
+            <Heading fontSize="32px" color="blue.600" ml="8px">
+              {chord}
+            </Heading>
+          </Flex>
+          <Box minH="120px">
             {mappedKeyData.map((key, i) => {
               const { noteName, octave, relNote } = key
 
@@ -109,7 +122,7 @@ const App = () => {
             })}
           </Box>
         </Flex>
-        <Box flexGrow={1}>
+        <Box flexGrow={1} w="100%">
           <Keyboard />
           <DataVisualizer />
         </Box>
@@ -121,7 +134,7 @@ const App = () => {
         variant="link"
         onClick={() => toggleColorMode()}
       >
-        toggle dark mode
+        toggle
       </Button>
     </div>
   )

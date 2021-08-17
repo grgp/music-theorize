@@ -1,7 +1,29 @@
+CDEFG A  B
+13568 10 12
                   half notes     notation         keys
 Cmajor            1   5   8      i   iii   v      C   E   G
         (diff)      4   3          2     2          2   2
                                   mj3   mn3
+
+                  half notes         notation               keys
+Cmaj7             1   5   8   12     i   iii   v   vii       C   E   G   B
+        (diff)      4   3   4          2     2   2             2   2   2
+                                      mj3   mn3  mj3
+
+Cmaj7 inv 1       5   8   12  1      iii   v   vii   i       E   G   B   C
+        (diff)      3   4   1           2    3     2           2   2   1
+                                       mn3  mj3   mn2
+(or Emin aug 5
+if it exists)
+
+Cmaj7 inv 2       8   12  1  5     iii   v   vii   i       E   G   B   C
+        (diff)      4   1  4         2    3     2           2   2   1
+                                       mn3  mj3   mn2
+
+Cmaj7 inv 3       12  1  5  8      iii   v   vii   i       E   G   B   C
+        (diff)      1  4  3         2    3     2           2   2   1
+                                       mn3  mj3   mn2
+
 
 Cmajor inv 1      5   8   1      iii   v   i      E   G   C
         (diff)      3   5           2    3           2   3
