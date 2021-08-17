@@ -7,7 +7,7 @@ Cmajor inv 1      5   8   1      iii   v   i      E   G   C
         (diff)      3   5           2    3           2   3
                                    mn3  pf4
 
-Cmajor inv 2      8   5   1      v   iii   i      G   C   E
+Cmajor inv 2      8   1   5      v   iii   i      G   C   E
         (diff)      5   4          3     2          3   2
                                   pf4   mj3
 
@@ -19,7 +19,7 @@ Cminor inv 1      4   8   1      iiim  v   i      Eb  G   C
         (diff)      4   5           2+   3          2+  3
                                   mn3   pf4
 
-Cminor inv 2      8   4   1      v   i   iiim     G   C   Eb
+Cminor inv 2      8   1   4      v   i   iiim     G   C   Eb
         (diff)      5   3          3    2-          3   2-
                                   pf4   mn3
 
@@ -30,9 +30,6 @@ Relationships
 3  4  ->  Minor
 4  5  ->  Minor inv 1
 5  3  ->  Minor inv 2
-
-Ex:
-
 
                   half notes     notation         keys
 Gmajor            8   12  3      i   iii   v      G   B   D
