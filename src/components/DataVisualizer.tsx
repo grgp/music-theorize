@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { MidiDataContext } from 'web-midi-hooks';
-import { keyMap } from '../common/keyMap';
-import '../styles/visualizer.css';
+import React, { useContext } from 'react'
+import { MidiDataContext } from 'web-midi-hooks'
+import { keyMap } from '../common/keyMap'
+import '../styles/visualizer.css'
 
 const DataVisualizer = () => {
-  const { deviceName, keyData, pitch, modulation, errors } = useContext(MidiDataContext);
+  const { deviceName, keyData, pitch, modulation, errors } =
+    useContext(MidiDataContext)
 
   return (
     <div className="visualizer">
@@ -13,17 +14,25 @@ const DataVisualizer = () => {
         <p className="device">{deviceName}</p>
         <p className="errors">{errors}</p>
       </div>
-      
+
       <div className="flex">
-      <h4>Notes:</h4>
+        <h4>Notes:</h4>
         {keyData.map((key, i) => {
-          return <p className="data" key={i}>{key.note && keyMap[key.note].note}{" "}</p>
+          return (
+            <p className="data" key={i}>
+              {key.note && keyMap[key.note].note}{' '}
+            </p>
+          )
         })}
       </div>
       <div className="flex">
         <h4>Velocities:</h4>
         {keyData.map((keyPress, i) => {
-          return <p className="data" key={i}>{keyPress.velocity}{" "}</p>
+          return (
+            <p className="data" key={i}>
+              {keyPress.velocity}{' '}
+            </p>
+          )
         })}
       </div>
       <div className="flex">
@@ -35,7 +44,7 @@ const DataVisualizer = () => {
         <p className="data">{modulation}</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DataVisualizer;
+export default DataVisualizer

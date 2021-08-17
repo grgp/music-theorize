@@ -1,40 +1,56 @@
-import React, { ReactElement, useContext } from 'react';
-import { MidiDataContext } from 'web-midi-hooks';
-import '../styles/keyboard.css';
-import { keyMap } from '../common/keyMap';
+import React, { ReactElement, useContext } from 'react'
+import { MidiDataContext } from 'web-midi-hooks'
+import '../styles/keyboard.css'
+import { keyMap } from '../common/keyMap'
 
-let regularKeys = [] as ReactElement[];
+let regularKeys = [] as ReactElement[]
 
 for (let key in keyMap) {
-  const keyStyle = { left: keyMap[key].offset };
-  if (keyMap[key].color === "white") {
-    regularKeys.push(<div style={keyStyle} className="white-key" key={key}></div>);
+  const keyStyle = { left: keyMap[key].offset }
+  if (keyMap[key].color === 'white') {
+    regularKeys.push(
+      <div style={keyStyle} className="white-key" key={key}></div>
+    )
   } else {
-    regularKeys.push(<div style={keyStyle} className="black-key" key={key}></div>);
+    regularKeys.push(
+      <div style={keyStyle} className="black-key" key={key}></div>
+    )
   }
 }
 
 const Keyboard = () => {
-  const { keyData, pitch, modulation } = useContext(MidiDataContext);
-  
-  const pitchStyle = { bottom: pitch };
-  const modStyle = { bottom: modulation };
+  const { keyData, pitch, modulation } = useContext(MidiDataContext)
+
+  const pitchStyle = { bottom: pitch }
+  const modStyle = { bottom: modulation }
 
   const pressedKeys = keyData.map((key, i) => {
-    let keyToRender = null as ReactElement | null;
+    let keyToRender = null as ReactElement | null
 
-    if(key.note) {
+    if (key.note) {
       const keyStyle = {
         left: keyMap[key.note].offset,
-      };
-      if (keyMap[key.note].color === "white") {
-        keyToRender = <div style={keyStyle} className="white-key white-pressed" key={i}></div>;
+      }
+      if (keyMap[key.note].color === 'white') {
+        keyToRender = (
+          <div
+            style={keyStyle}
+            className="white-key white-pressed"
+            key={i}
+          ></div>
+        )
       } else {
-        keyToRender = <div style={keyStyle} className="black-key black-pressed" key={i}></div>;
+        keyToRender = (
+          <div
+            style={keyStyle}
+            className="black-key black-pressed"
+            key={i}
+          ></div>
+        )
       }
     }
-    return keyToRender;
-  });
+    return keyToRender
+  })
 
   return (
     <div className="keyboard-outer">
@@ -58,7 +74,7 @@ const Keyboard = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Keyboard;
+export default Keyboard

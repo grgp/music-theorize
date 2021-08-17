@@ -1,7 +1,7 @@
-import React from 'react';
-import Header from './Header';
-import DataVisualizer from './DataVisualizer';
-import Keyboard from './Keyboard';
+import React from 'react'
+import Header from './Header'
+import DataVisualizer from './DataVisualizer'
+import Keyboard from './Keyboard'
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <Keyboard />
       <DataVisualizer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,13 +1,13 @@
-import { ColorModeScript } from "@chakra-ui/react"
-import * as React from "react"
-import ReactDOM from "react-dom"
+import { ColorModeScript } from '@chakra-ui/react'
+import * as React from 'react'
+import ReactDOM from 'react-dom'
 import { MidiProvider } from 'web-midi-hooks'
 
-import { ChakraProvider, theme } from "@chakra-ui/react"
+import { ChakraProvider, theme } from '@chakra-ui/react'
 
-import App from "./components/App"
-import * as serviceWorker from "./serviceWorker"
-import './styles/index.css';
+import App from './components/App'
+import * as serviceWorker from './serviceWorker'
+import './styles/index.css'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,7 +18,7 @@ ReactDOM.render(
       </ChakraProvider>
     </MidiProvider>
   </React.StrictMode>,
-  document.getElementById("root"),
+  document.getElementById('root')
 )
 
 // If you want your app to work offline and load faster, you can change
