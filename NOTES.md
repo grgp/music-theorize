@@ -1,11 +1,10 @@
 CDEFG A  B
 13568 10 12
-                  half notes     notation         keys
+                  semitones     notation         keys
 Cmajor            1   5   8      i   iii   v      C   E   G
         (diff)      4   3          2     2          2   2
                                   mj3   mn3
-
-                  half notes         notation               keys
+                  semitones         notation               keys
 Cmaj7             1   5   8   12     i   iii   v   vii       C   E   G   B
         (diff)      4   3   4          2     2   2             2   2   2
                                       mj3   mn3  mj3
@@ -15,6 +14,17 @@ Cmaj7 inv 1       5   8   12  1      iii   v   vii   i       E   G   B   C
                                        mn3  mj3   mn2
 (or Emin aug 5
 if it exists)
+
+if you play a minor on top of a major, you get a seventh?
+cadences play some chords in an order, like punct in a sentence
+playful cadence 4 -> 1
+
+vertical vs                     horizontal harmony
+sounds good together            sounds good after
+
+markov chain
+state machines for cadence
+ideas like coop racing games
 
 Cmaj7 inv 2       8   12  1  5     iii   v   vii   i       E   G   B   C
         (diff)      4   1  4         2    3     2           2   2   1

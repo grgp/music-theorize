@@ -70,6 +70,9 @@ const App = () => {
     '4 3 2': { kind: 'min7', inv: 1, root: 3 },
     '3 2 3': { kind: 'min7', inv: 2, root: 2 },
     '2 3 4': { kind: 'min7', inv: 3, root: 1 },
+    // open chords
+    '4 3 5 4 5': { kind: 'minor over major', inv: 1, root: 1 },
+    // relative minors/majors
   }
 
   const quality = relationsMap[relations.join(' ')]
