@@ -48,6 +48,8 @@ const Keyboard = () => {
     let keyToRender = null as ReactElement | null
 
     if (key.note) {
+      if (!keyMap[key.note]) return keyToRender
+
       const keyStyle = {
         left: keyMap[key.note].offset,
       }

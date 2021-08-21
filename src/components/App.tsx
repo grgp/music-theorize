@@ -24,18 +24,25 @@ const App = () => {
 
   console.log('what is {efk', { keyData, sortedKeyData })
 
+  console.log('what is keyMap', { keyMap });
+
   const mappedKeyData = sortedKeyData
+    .filter(key => key.offset !== null)
     .map((key, i) => {
-      let note = key.note && keyMap[key.note].note.replace('s', '#')
+      try {
+        let note = key.note && keyMap[key.note].note.replace('s', '#')
 
-      if (!note) return null
-
-      const noteName = note.substr(0, note.length - 1)
-      const octave = note[note.length - 1]
-
-      const relNote = (key.note % 12) + 1
-
-      return { ...key, noteName, octave, relNote }
+        if (!note) return null
+  
+        const noteName = note.substr(0, note.length - 1)
+        const octave = note[note.length - 1]
+  
+        const relNote = (key.note % 12) + 1
+  
+        return { ...key, noteName, octave, relNote }
+      } catch (err) {
+        return null
+      }
     })
     .filter(Boolean)
 
@@ -78,6 +85,8 @@ const App = () => {
     '2 2 3': { kind: 'add9', inv: 0, root: 0 },
 
     '4 3 3': { kind: '7', inv: 0, root: 0 },
+    '4 3 7': { kind: 'add9', inv: 0, root: 0 },
+    '4 3 3 4': { kind: '7 add9', inv: 0, root: 0 },
 
     '4 3 4': { kind: 'maj7', inv: 0, root: 0 },
     '3 4 1': { kind: 'maj7', inv: 1, root: 3 },
@@ -87,30 +96,45 @@ const App = () => {
     '3 4 3': { kind: 'm7', inv: 0, root: 0 },
     '3 4 4': { kind: 'm maj7', inv: 0, root: 0 },
 
-    '4 3 2': { kind: '6', inv: 0, root: 0 },
-    // OR
-    // '4 3 2': { kind: 'min7', inv: 1, root: 3 },
+    '4 3 2': [
+      { kind: '6', inv: 0, root: 0 },
+      { kind: 'min7', inv: 1, root: 3 },
+    ],
 
-    '3 2 3': { kind: '6', inv: 1, root: 3 },
-    // OR
-    // '3 2 3': { kind: 'min7', inv: 2, root: 2 },
+    '3 2 3': [
+      { kind: '6', inv: 1, root: 3 },
+      { kind: 'min7', inv: 2, root: 2 },
+    ],
 
-    '2 3 4': { kind: 'min7', inv: 3, root: 1 },
-    // OR
-    // '2 3 4': { kind: '6', inv: 2, root: 2 },
+    '2 3 4': [
+      { kind: 'min7', inv: 3, root: 1 },
+      { kind: '6', inv: 2, root: 2 },
+    ],
+
+    '4 3 5': { kind: 'major', inv: 0, root: 0 },
 
     // open chords
     '4 3 5 4 5': { kind: 'minor over major', inv: 1, root: 1 },
     '3 4 3 5': { kind: 'm7', inv: 0, root: 0 },
     '3 4 3 5 4': { kind: 'm7', inv: 0, root: 0 },
     // relative minors/majors
-  }
+  } as const
 
-  const quality = relationsMap[relations.join(' ')]
-  const chord = quality
-    ? mappedKeyData[quality.root].noteName.toUpperCase() +
-      ` ${quality.kind} ${quality.inv ? `inv ${quality.inv}` : ''}`
-    : ''
+  const quality = relationsMap[relations.join(' ') as keyof typeof relationsMap]
+  const chords = (() => {
+    if (!quality) return ''
+
+    const mappingFunc = (chordQ) =>
+      mappedKeyData[chordQ.root].noteName.toUpperCase() +
+      ` ${chordQ.kind} ${chordQ.inv ? `inv ${chordQ.inv}` : ''}`
+
+    if ('root' in quality) {
+      const chordQ = quality
+      return chordQ ? mappingFunc(chordQ) : ''
+    }
+
+    return quality.map(chordQ => mappingFunc(chordQ)).join(' or ')
+  })()
 
   return (
     <div className="App">
@@ -120,7 +144,7 @@ const App = () => {
           <Flex>
             <Heading fontSize="32px">Chord:</Heading>
             <Heading fontSize="32px" color="blue.600" ml="8px">
-              {chord}
+              {chords}
             </Heading>
           </Flex>
           <Box minH="120px">

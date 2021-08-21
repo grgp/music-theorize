@@ -17,13 +17,15 @@ const DataVisualizer = () => {
 
       <div className="flex">
         <h4>Notes:</h4>
-        {keyData.map((key, i) => {
-          return (
-            <p className="data" key={i}>
-              {key.note && keyMap[key.note].note}{' '}
-            </p>
-          )
-        })}
+        {keyData
+          .filter((key) => keyMap[key.note])
+          .map((key, i) => {
+            return (
+              <p className="data" key={i}>
+                {key.note && keyMap[key.note].note}{' '}
+              </p>
+            )
+          })}
       </div>
       <div className="flex">
         <h4>Velocities:</h4>
