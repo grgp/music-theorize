@@ -55,23 +55,54 @@ const App = () => {
   }
 
   const relationsMap = {
+    '3': { kind: 'minor', inv: 0, root: 0 },
+    '4': { kind: 'major', inv: 0, root: 0 },
+    '8': { kind: 'major', inv: 1, root: 1 },
+    '7': { kind: '5', inv: 0, root: 0 },
+    '5': { kind: '5', inv: 1, root: 1 },
+
     '4 3': { kind: 'major', inv: 0, root: 0 },
     '3 5': { kind: 'major', inv: 1, root: 2 },
     '5 4': { kind: 'major', inv: 2, root: 1 },
     '3 4': { kind: 'minor', inv: 0, root: 0 },
     '4 5': { kind: 'minor', inv: 1, root: 2 },
     '5 3': { kind: 'minor', inv: 2, root: 1 },
-    // need to check
+
+    '4 4': { kind: 'aug', inv: 0, root: 0 },
+    // C aug -> E aug -> Ab aug -> C aug
+
+    '2 5': { kind: 'sus2', inv: 0, root: 0 },
+    '5 5': { kind: 'sus2', inv: 1, root: 2 },
+    '5 2': { kind: 'sus4', inv: 0, root: 0 },
+
+    '2 2 3': { kind: 'add9', inv: 0, root: 0 },
+
+    '4 3 3': { kind: '7', inv: 0, root: 0 },
+
     '4 3 4': { kind: 'maj7', inv: 0, root: 0 },
     '3 4 1': { kind: 'maj7', inv: 1, root: 3 },
     '4 1 4': { kind: 'maj7', inv: 2, root: 2 },
     '1 4 3': { kind: 'maj7', inv: 3, root: 1 },
-    '3 4 4': { kind: 'min7', inv: 0, root: 0 },
-    '4 3 2': { kind: 'min7', inv: 1, root: 3 },
-    '3 2 3': { kind: 'min7', inv: 2, root: 2 },
+
+    '3 4 3': { kind: 'm7', inv: 0, root: 0 },
+    '3 4 4': { kind: 'm maj7', inv: 0, root: 0 },
+
+    '4 3 2': { kind: '6', inv: 0, root: 0 },
+    // OR
+    // '4 3 2': { kind: 'min7', inv: 1, root: 3 },
+
+    '3 2 3': { kind: '6', inv: 1, root: 3 },
+    // OR
+    // '3 2 3': { kind: 'min7', inv: 2, root: 2 },
+
     '2 3 4': { kind: 'min7', inv: 3, root: 1 },
+    // OR
+    // '2 3 4': { kind: '6', inv: 2, root: 2 },
+
     // open chords
     '4 3 5 4 5': { kind: 'minor over major', inv: 1, root: 1 },
+    '3 4 3 5': { kind: 'm7', inv: 0, root: 0 },
+    '3 4 3 5 4': { kind: 'm7', inv: 0, root: 0 },
     // relative minors/majors
   }
 
