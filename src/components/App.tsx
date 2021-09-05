@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import Keyboard from './Keyboard'
 import { useContext } from 'react'
 import { MidiDataContext } from 'web-midi-hooks'
 import { keyMap, keyNames } from '../common/keyMap'
+import { scales } from '../common/scalesMap'
 
 const initialNotesHistory = keyNames.reduce(
   (acc, key) => ({
@@ -31,31 +32,38 @@ const App = () => {
   const [lastNotesPlayed, setLastNotesPlayed] = useState('')
   const [notesHistory, setNotesHistory] = useState(initialNotesHistory)
 
-  const sortedKeyData = keyData.sort((a, b) => a.note - b.note)
+  const sortedKeyData = useMemo(
+    () => keyData.sort((a, b) => a.note - b.note),
+    [keyData]
+  )
 
   console.log('what is {efk', { keyData, sortedKeyData })
 
   console.log('what is keyMap', { keyMap })
 
-  const mappedKeyData = sortedKeyData
-    .filter((key) => key.offset !== null)
-    .map((key, i) => {
-      try {
-        let note = key.note && keyMap[key.note].note.replace('s', '#')
+  const mappedKeyData = useMemo(
+    () =>
+      sortedKeyData
+        .filter((key) => key.offset !== null)
+        .map((key, i) => {
+          try {
+            let note = key.note && keyMap[key.note].note.replace('s', '#')
 
-        if (!note) return null
+            if (!note) return null
 
-        const noteName = note.substr(0, note.length - 1)
-        const octave = note[note.length - 1]
+            const noteName = note.substr(0, note.length - 1)
+            const octave = note[note.length - 1]
 
-        const relNote = (key.note % 12) + 1
+            const relNote = (key.note % 12) + 1
 
-        return { ...key, noteName, octave, relNote }
-      } catch (err) {
-        return null
-      }
-    })
-    .filter(Boolean)
+            return { ...key, noteName, octave, relNote }
+          } catch (err) {
+            return null
+          }
+        })
+        .filter(Boolean),
+    [sortedKeyData]
+  )
 
   console.log('mapped', { mappedKeyData })
 
@@ -171,6 +179,11 @@ const App = () => {
       <Flex width="100%">
         <Flex flexDir="column" width="600px" height="100vh" p={4} pt={8}>
           {JSON.stringify(notesHistory)}
+          {Object.entries(scales).map((scale) => (
+            <Text>
+              {scale[0]}: {scale[1]}
+            </Text>
+          ))}
           <Button
             mb="40px"
             onClick={() => setNotesHistory(initialNotesHistory)}
