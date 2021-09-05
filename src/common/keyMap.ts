@@ -131,14 +131,15 @@ export const keyMap = {
 // c2 36
 // c3 48
 
-const names = ['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b']
+export const keyNamesWithoutSymbol = ['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b']
+export const keyNames = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b']
 
 export const keyMap1 = (() => {
   const res = {};
 
   [...Array(61)].map((_, i) => i + 12 + 1)
     .forEach((key) => {
-      const noteName = names[key % 12]
+      const noteName = keyNamesWithoutSymbol[key % 12]
 
       res[key] = {
         note: `${noteName}${Math.floor(key / 12)}`,

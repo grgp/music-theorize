@@ -1,3 +1,39 @@
+# SCALES
+Major
+C   D   E   F   G   A   B   C
+  2   2   1   2   2   2   1
+
+Minor (Natural)
+C   D   Eb  F   G   Ab  Bb  C
+  2   1   2   2   1   2   2
+
+Minor (Harmonic)
+C   D   Eb  F   G   Ab  B   C
+  2   1   1   2   1   3   1
+
+Minor (Melodic)
+C   D   Eb  F   G   A   B   C
+  2   1   2   2   2   2   1
+
+If I played this key
+F#
+
+I know that it's:
+1st on F# all
+2nd on E all
+3rd on D major
+3rd on D# minorAll
+4th on C# all
+5th on B all
+6th on A major, A minorMel
+6th on A# minorNat and minorHmo
+7th on G major, minorHmo and minorMel
+7th on G# major, minorNat
+
+so there are 28 scales that could work with one note
+
+# CHORDS
+
 CDEFG A  B
 13568 10 12
                   semitones     notation         keys

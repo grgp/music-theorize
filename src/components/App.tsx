@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -12,7 +12,15 @@ import DataVisualizer from './DataVisualizer'
 import Keyboard from './Keyboard'
 import { useContext } from 'react'
 import { MidiDataContext } from 'web-midi-hooks'
-import { keyMap } from '../common/keyMap'
+import { keyMap, keyNames } from '../common/keyMap'
+
+const initialNotesHistory = keyNames.reduce(
+  (acc, key) => ({
+    ...acc,
+    [key]: 0,
+  }),
+  {}
+)
 
 const App = () => {
   const { deviceName, keyData, pitch, modulation, errors } =
@@ -20,31 +28,53 @@ const App = () => {
 
   const { toggleColorMode } = useColorMode()
 
+  const [lastNotesPlayed, setLastNotesPlayed] = useState('')
+  const [notesHistory, setNotesHistory] = useState(initialNotesHistory)
+
   const sortedKeyData = keyData.sort((a, b) => a.note - b.note)
 
   console.log('what is {efk', { keyData, sortedKeyData })
 
-  console.log('what is keyMap', { keyMap });
+  console.log('what is keyMap', { keyMap })
 
   const mappedKeyData = sortedKeyData
-    .filter(key => key.offset !== null)
+    .filter((key) => key.offset !== null)
     .map((key, i) => {
       try {
         let note = key.note && keyMap[key.note].note.replace('s', '#')
 
         if (!note) return null
-  
+
         const noteName = note.substr(0, note.length - 1)
         const octave = note[note.length - 1]
-  
+
         const relNote = (key.note % 12) + 1
-  
+
         return { ...key, noteName, octave, relNote }
       } catch (err) {
         return null
       }
     })
     .filter(Boolean)
+
+  console.log('mapped', { mappedKeyData })
+
+  useEffect(() => {
+    const notesHistoryAsString = JSON.stringify(mappedKeyData)
+    if (lastNotesPlayed === notesHistoryAsString) return
+
+    setLastNotesPlayed(notesHistoryAsString)
+
+    let updatedNotesHistory = { ...notesHistory }
+
+    mappedKeyData.forEach((key) => {
+      updatedNotesHistory[key.noteName] += 1
+    })
+
+    // if (JSON.stringify(notesHistory) !== JSON.stringify(updatedNotesHistory)) {
+    setNotesHistory(updatedNotesHistory)
+    // }
+  }, [lastNotesPlayed, mappedKeyData]) // eslint-disable-line
 
   const relations = [] as number[]
   for (let n = 0; n < mappedKeyData.length - 1; n++) {
@@ -133,13 +163,20 @@ const App = () => {
       return chordQ ? mappingFunc(chordQ) : ''
     }
 
-    return quality.map(chordQ => mappingFunc(chordQ)).join(' or ')
+    return quality.map((chordQ) => mappingFunc(chordQ)).join(' or ')
   })()
 
   return (
     <div className="App">
       <Flex width="100%">
         <Flex flexDir="column" width="600px" height="100vh" p={4} pt={8}>
+          {JSON.stringify(notesHistory)}
+          <Button
+            mb="40px"
+            onClick={() => setNotesHistory(initialNotesHistory)}
+          >
+            Reset history
+          </Button>
           <Heading fontSize="24px">Relations: {relations.join(' ')}</Heading>
           <Flex>
             <Heading fontSize="32px">Chord:</Heading>
